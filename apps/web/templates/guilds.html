@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% from "macros/sidebar.html" import sidebar %}
+{% from "macros/user_login.html" import user_login %}
+
+{% block head %}
+<title>Guilds - Shine BWP</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/guilds.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/sidebar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/user.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="{{ url_for('static', filename='scripts/charts.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+<div class="guilds-container">
+    <button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleSidebar()">
+        <iconify-icon icon="lucide:menu"></iconify-icon>
+    </button>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    {{ sidebar(user) }}
+
+    <main class="main">
+        {{ user_login(user) }}
+
+        <div class="tracked-guilds">
+            <div class="info">
+                <h1 class="title">Guild Check</h1>
+                <p class="subtext">Select a guild below to view its information.</p>
+            </div>
+
+            {% for guild in tracked_guilds %}
+            <a href="{{ url_for('guild.check', guild_id=guild.id) }}" class="guild">
+                <div class="guild-info">
+                    <h1 class="guild-name">{{ guild.name }} [{{guild.id}}]</h1>
+                    <p class="guild-xp">GXP: {{ guild.xp | number }}</p>
+                </div>
+                <iconify-icon icon="lucide:chevron-right" class="guild-icon"></iconify-icon>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+    <script>
+        function toggleSidebar() {
+            document
+                .querySelector(".sidebar")
+                ?.classList.toggle("open");
+
+            document
+                .querySelector(".sidebar-overlay")
+                ?.classList.toggle("show");
+        }
+    </script>
+</div>
+{% endblock %}

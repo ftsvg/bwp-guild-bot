@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "tamasfe.even-better-toml",
+        "usernamehw.errorlens",
+    ]
+}

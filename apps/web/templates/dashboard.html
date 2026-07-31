@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% from "macros/sidebar.html" import sidebar %}
+{% from "macros/user_login.html" import user_login %}
+
+{% block head %}
+<title>Dashboard - Shine BWP</title>
+<link rel="stylesheet" href="{{url_for('static', filename='styles/dashboard.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='styles/macros/sidebar.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='styles/macros/user.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="dashboard-container">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <iconify-icon icon="lucide:menu"></iconify-icon>
+    </button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    {{ sidebar(user) }}
+
+    <main class="main">
+        {{ user_login(user) }}
+
+        <div class="stats">
+            <div class="stat-card">
+                <iconify-icon icon="lucide:shield" class="stat-icon"></iconify-icon>
+                <div class="info">
+                    <p class="stat">Tracked Guilds</p>
+                    <h1 class="value">{{ guild.total_tracked_guilds | number }}</h1>
+                </div>
+            </div>
+            <div class="stat-card">
+                <iconify-icon icon="lucide:users" class="stat-icon"></iconify-icon>
+                <div class="info">
+                    <p class="stat">Tracked Players</p>
+                    <h1 class="value">{{ guild.total_tracked_players | number }}</h1>
+                </div>
+            </div>
+            <div class="stat-card">
+                <iconify-icon icon="lucide:chart-no-axes-column" class="stat-icon"></iconify-icon>
+                <div class="info">
+                    <p class="stat">Shine GXP</p>
+                    <h1 class="value">{{ guild.total_guild_xp | number }}</h1>
+                </div>
+            </div>
+            <div class="stat-card">
+                <iconify-icon icon="lucide:shield-user" class="stat-icon"></iconify-icon>
+                <div class="info">
+                    <p class="stat">Shine Members</p>
+                    <h1 class="value">{{ guild.total_guild_members }}/50</h1>
+                </div>
+            </div>
+        </div>
+        <div class="tracked-guilds">
+            <div class="header">
+                <h2>Top 10 Guilds</h2>
+            </div>
+
+            <div class="guild-chart">
+                {% for guild in tracked_guilds %}
+                <div class="guild-row">
+
+                    <div class="guild-name">
+                        {{ guild.name }}
+                    </div>
+
+                    <div class="guild-bar-container">
+                        <div class="guild-bar" style="--guild-width: {{ guild.percentage }}%">
+                            {{ guild.xp | number }} XP
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="guilds-logs">
+            <div class="header">
+                <h2>Shine Guild Logs</h2>
+                <p class="subtext">Shows the 5 most recent logs</p>
+            </div>
+
+            <div class="logs-container">
+                {% for log in guild_logs %}
+                <div class="log-entry {{ log.log_type }}">
+                    <img src="https://nmsr.nickac.dev/face/{{ log.player_name }}" alt="{{ log.player_name }}"
+                        class="player-head">
+
+                    <div class="log-info">
+                        <div class="log-message">
+                            <strong>{{ log.player_name }}</strong>
+                            {% if log.log_type == "join" %}
+                            joined the guild
+                            {% else %}
+                            left (or was kicked) from the guild
+                            {% endif %}
+                        </div>
+
+                        <div class="log-date">
+                            <span>
+                                {{ log.created_at | date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p class="empty-logs">No guild activity yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("open");
+        document.querySelector(".sidebar-overlay").classList.toggle("show");
+    }
+</script>
+{% endblock %}

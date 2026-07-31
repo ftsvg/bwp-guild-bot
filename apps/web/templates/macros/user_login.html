@@ -1,0 +1,10 @@
+{% macro user_login(user) %}
+<div class="user-login">
+    <img src="https://nmsr.nickac.dev/bust/{{ user.uuid }}" alt="{{ user.username }}'s skin" class="skin-bust">
+    <div class="user-text">
+        <span class="subtext">Logged in as,</span>
+        <h1 class="username">{{ user.username }}</h1>
+        <span class="role">{{ "Admin" if user.role == 1 else"User" }}</span>
+    </div>
+</div>
+{% endmacro %}

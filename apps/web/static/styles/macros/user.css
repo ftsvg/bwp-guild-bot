@@ -1,0 +1,64 @@
+.user-login {
+    display: flex;
+    align-items: center;
+    padding-left: 8rem;
+    padding-top: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.user-login .skin-bust {
+    height: 150px;
+    width: auto;
+}
+
+.user-login .user-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-text .subtext {
+    font-size: 1.2rem;
+    color: var(--muted-foreground);
+}
+
+.user-text .username {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--card-foreground);
+}
+
+.user-text .role {
+    font-size: 1rem;
+    color: var(--muted-foreground);
+}
+
+@media (max-width: 1199px) {
+    .user-login {
+        padding-left: 1rem;
+        padding-top: 1rem;
+    }
+
+    .user-login .skin-bust {
+        height: 100px;
+        image-rendering: pixelated;
+    }
+
+    .user-text .username {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-login {
+        padding-left: 1rem;
+    }
+
+    .user-text .subtext {
+        font-size: 1rem;
+    }
+
+    .user-text .username {
+        font-size: 1.25rem;
+    }
+
+}

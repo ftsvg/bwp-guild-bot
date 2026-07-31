@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% from "macros/sidebar.html" import sidebar %}
+{% from "macros/user_login.html" import user_login %}
+
+{% block head %}
+<title>Guilds - Shine BWP</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/guild_check.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/sidebar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/user.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="{{ url_for('static', filename='scripts/charts.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+<div class="guilds-container">
+    <button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleSidebar()">
+        <iconify-icon icon="lucide:menu"></iconify-icon>
+    </button>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    {{ sidebar(user) }}
+
+    <main class="main">
+        {{ user_login(user) }}
+
+        <section class="guild-info">
+            <div class="guild-data">
+                <h1 class="card-title">Guild Info</h1>
+                <div class="rows">
+                    <div class="row">
+                        <iconify-icon icon="lucide:shield" class="icon"></iconify-icon>
+                        <span class="title">Name:</span> <span class="value">{{guild_data.name}}
+                            [{{guild_data.id}}]</span>
+                    </div>
+                    <div class="row">
+                        <iconify-icon icon="lucide:message-square-text" class="icon"></iconify-icon>
+                        <span class="title">Description:</span><span class="value">{{guild_data.desc}}</span>
+                    </div>
+                    <div class="row">
+                        <iconify-icon icon="lucide:user" class="icon"></iconify-icon>
+                        <span class="title">Original Owner:</span><span
+                            class="value">{{guild_data.original_owner}}</span>
+                    </div>
+                    <div class="row">
+                        <iconify-icon icon="lucide:calendar" class="icon"></iconify-icon>
+                        <span class="title">Creation Date:</span> <span class="value">{{guild_data.creation_time |
+                            datetime}}</span>
+                    </div>
+                    <div class="row">
+                        <iconify-icon icon="lucide:chart-no-axes-column" class="icon"></iconify-icon>
+                        <span class="title">Guild XP:</span> <span class="value">{{guild_data.gxp | number}}</span>
+                    </div>
+                    <div class="row">
+                        <iconify-icon icon="lucide:shield-user" class="icon"></iconify-icon>
+                        <span class="title">Members:</span> <span class="value">{{guild_data.member_count}}/50</span>
+                    </div>
+                </div>
+            </div>
+            <div class="guild-gxp-data">
+                <h1 class="card-title">{{guild_data.name}} GXP Stats</h1>
+                <div class="data">
+                    <div class="data-card">
+                        <iconify-icon icon="lucide:chart-line" class="icon"></iconify-icon>
+                        <div class="info">
+                            <span class="title">GXP Gained Today</span>
+                            <span class="value">{{daily_gxp | number}}</span>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <iconify-icon icon="lucide:chart-line" class="icon"></iconify-icon>
+                        <div class="info">
+                            <span class="title">GXP Gained This Week</span>
+                            <span class="value">{{weekly_gxp | number}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="charts-content">
+            <article class="chart-card">
+                <header class="chart-card-header">
+                    <h1 class="chart-title">
+                        Preview {{guild_data.name}} XP Chart
+                    </h1>
+
+                    <p class="chart-subtitle">
+                        Stars gained by each guild member since their first
+                        snapshot from this week. Hover over a bar to view the
+                        player details.
+                    </p>
+
+                    <div class="chart-legend" aria-label="Player chart color legend">
+                        <div class="legend-item">
+                            <span class="legend-color legend-first" aria-hidden="true"></span>
+
+                            <span>#1 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-top-five" aria-hidden="true"></span>
+
+                            <span>Top 5 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-two-plus" aria-hidden="true"></span>
+
+                            <span>&ge; 2 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-below-two" aria-hidden="true"></span>
+
+                            <span>&lt; 2 stars</span>
+                        </div>
+                    </div>
+                </header>
+
+                {% if xp_chart %}
+                <div class="chart-scroll">
+                    <div class="chart-wrapper player-chart-wrapper">
+                        <canvas id="xp-chart" aria-label="Weekly player star gains" role="img"></canvas>
+                    </div>
+                </div>
+                {% else %}
+                <div class="chart-empty">
+                    <iconify-icon icon="lucide:chart-no-axes-column"></iconify-icon>
+
+                    <p>No player XP snapshot data is available.</p>
+                </div>
+                {% endif %}
+            </article>
+        </section>
+
+        <section class="guild-members">
+            <div class="heading">
+                <h1 class="title">Guild Members</h1>
+            </div>
+
+            {% set role_groups = [
+            ("OWNER", "Owner"),
+            ("ADMIN", "Admins"),
+            ("MODERATOR", "Moderators"),
+            ("MEMBER", "Members")
+            ] %}
+
+            <div class="member-groups">
+                {% for role_value, role_title in role_groups %}
+                <div class="member-group">
+                    <div class="member-group-heading">
+                        <h2>{{ role_title }}</h2>
+                    </div>
+
+                    <div class="member-group-list">
+                        {% for member in guild_members %}
+                        {% if member.guild_role == role_value %}
+                        <div class="guild-member-card">
+                            {% if member.rank_spans %}
+                            <span class="member-rank">
+                                {% for span in member.rank_spans %}
+                                <span style="--text-color: {{ span.color }};">
+                                    {{ span.text }}
+                                </span>
+                                {% endfor %}
+                            </span>
+                            {% endif %}
+
+                            <span class="member-username">
+                                {% for span in member.username_spans %}
+                                <span style="--text-color: {{ span.color }};">
+                                    {{ span.text }}
+                                </span>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        <div class="guilds-logs">
+            <div class="header">
+                <h2 class="title">{{ guild_data.name }} Guild Logs</h2>
+                <p class="subtext">Shows the 10 most recent logs</p>
+            </div>
+
+            <div class="logs-container">
+                {% for log in guild_logs %}
+                <div class="log-entry {{ log.log_type }}">
+                    <img src="https://nmsr.nickac.dev/face/{{ log.player_name }}" alt="{{ log.player_name }}"
+                        class="player-head">
+
+                    <div class="log-info">
+                        <div class="log-message">
+                            <strong>{{ log.player_name }}</strong>
+                            {% if log.log_type == "join" %}
+                            joined the guild
+                            {% else %}
+                            left (or was kicked) from the guild
+                            {% endif %}
+                        </div>
+
+                        <div class="log-date">
+                            <span>
+                                {{ log.created_at | date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p class="empty-logs">No guild activity yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</div>
+
+{% if xp_chart %}
+<script id="xp-chart-data" type="application/json">
+    {{ xp_chart | tojson }}
+</script>
+{% endif %}
+
+<script>
+    function toggleSidebar() {
+        document
+            .querySelector(".sidebar")
+            ?.classList.toggle("open");
+
+        document
+            .querySelector(".sidebar-overlay")
+            ?.classList.toggle("show");
+    }
+</script>
+{% endblock %}

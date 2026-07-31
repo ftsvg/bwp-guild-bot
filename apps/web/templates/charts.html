@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% from "macros/sidebar.html" import sidebar %}
+{% from "macros/user_login.html" import user_login %}
+
+{% block head %}
+<title>Charts - Shine BWP</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/charts.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/sidebar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/macros/user.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="{{ url_for('static', filename='scripts/charts.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+<div class="charts-container">
+    <button class="mobile-menu-btn" type="button" aria-label="Open menu" onclick="toggleSidebar()">
+        <iconify-icon icon="lucide:menu"></iconify-icon>
+    </button>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    {{ sidebar(user) }}
+
+    <main class="main">
+        {{ user_login(user) }}
+
+        <section class="charts-content">
+            <article class="chart-card">
+                <header class="chart-card-header">
+                    <h1 class="chart-title">
+                        Preview Shine XP Chart
+                    </h1>
+
+                    <p class="chart-subtitle">
+                        Stars gained by each guild member since their first
+                        snapshot from this week. Hover over a bar to view the
+                        player details.
+                    </p>
+
+                    <div class="chart-legend" aria-label="Player chart color legend">
+                        <div class="legend-item">
+                            <span class="legend-color legend-first" aria-hidden="true"></span>
+
+                            <span>#1 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-top-five" aria-hidden="true"></span>
+
+                            <span>Top 5 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-two-plus" aria-hidden="true"></span>
+
+                            <span>&ge; 2 stars</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color legend-below-two" aria-hidden="true"></span>
+
+                            <span>&lt; 2 stars</span>
+                        </div>
+                    </div>
+                </header>
+
+                {% if xp_chart %}
+                <div class="chart-scroll">
+                    <div class="chart-wrapper player-chart-wrapper">
+                        <canvas id="xp-chart" aria-label="Weekly player star gains"></canvas>
+                    </div>
+                </div>
+                {% else %}
+                <div class="chart-empty">
+                    <iconify-icon icon="lucide:chart-no-axes-column"></iconify-icon>
+
+                    <p>No player XP snapshot data is available.</p>
+                </div>
+                {% endif %}
+            </article>
+
+            <article class="chart-card">
+                <header class="chart-card-header">
+                    <h1 class="chart-title">
+                        Preview GXP Chart
+                    </h1>
+
+                    <p class="chart-subtitle">
+                        XP gained by each tracked guild since its first snapshot
+                        from this week. Hover over a bar to view the guild
+                        details.
+                    </p>
+                </header>
+
+                {% if guild_chart %}
+                <div class="chart-scroll">
+                    <div class="chart-wrapper guild-chart-wrapper">
+                        <canvas id="guild-xp-chart" aria-label="Weekly guild XP gains"></canvas>
+                    </div>
+                </div>
+                {% else %}
+                <div class="chart-empty">
+                    <iconify-icon icon="lucide:chart-no-axes-column"></iconify-icon>
+
+                    <p>No guild XP snapshot data is available.</p>
+                </div>
+                {% endif %}
+            </article>
+        </section>
+    </main>
+</div>
+
+{% if xp_chart %}
+<script id="xp-chart-data" type="application/json">
+    {{ xp_chart | tojson }}
+</script>
+{% endif %}
+
+{% if guild_chart %}
+<script id="guild-xp-chart-data" type="application/json">
+    {{ guild_chart | tojson }}
+</script>
+{% endif %}
+
+<script>
+    function toggleSidebar() {
+        document
+            .querySelector(".sidebar")
+            ?.classList.toggle("open");
+
+        document
+            .querySelector(".sidebar-overlay")
+            ?.classList.toggle("show");
+    }
+</script>
+{% endblock %}

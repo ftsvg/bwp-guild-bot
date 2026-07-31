@@ -1,0 +1,47 @@
+{% macro sidebar(user) %}
+<aside class="sidebar">
+    <div class="branding">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shine Logo" class="brand-logo">
+        <h2 class="brand-name">Shine BWP</h2>
+    </div>
+
+    <nav class="navigation">
+        <a href="{{ url_for('dashboard.dashboard') }}"
+            class="nav-link {% if request.endpoint == 'dashboard.dashboard' %}active{% endif %}">
+            <iconify-icon icon="lucide:layout-dashboard"></iconify-icon>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{{ url_for('charts.charts') }}"
+            class="nav-link {% if request.endpoint == 'charts.charts' %}active{% endif %}">
+            <iconify-icon icon="lucide:chart-line"></iconify-icon>
+            <span>Preview Charts</span>
+        </a>
+
+        <a href="{{ url_for('guild.guilds') }}" class="nav-link">
+            <iconify-icon icon="lucide:shield"></iconify-icon>
+            <span>Tracked Guilds</span>
+        </a>
+
+        <a href="{{ url_for('dashboard.dashboard') }}" class="nav-link">
+            <iconify-icon icon="lucide:users"></iconify-icon>
+            <span>Tracked Players</span>
+        </a>
+    </nav>
+
+    <div class="actions">
+        <div class="user-details">
+            <img src="https://nmsr.nickac.dev/face/{{ user.uuid }}" alt="{{ user.username }}'s skin" class="skin">
+            <div class="user-info">
+                <span class="username">{{ user.username }}</span>
+                <span class="role">{{ "Admin" if user.role == 1 else "User" }}</span>
+            </div>
+        </div>
+
+        <a href="{{ url_for('auth.logout') }}" class="btn-logout">
+            <iconify-icon icon="lucide:user-round-arrow-left"></iconify-icon>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+{% endmacro %}

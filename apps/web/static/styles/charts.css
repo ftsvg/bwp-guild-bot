@@ -1,0 +1,241 @@
+.charts-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.charts-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    margin-left: 18rem;
+    width: calc(100% - 18rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.charts-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.chart-card {
+    width: 100%;
+    min-width: 0;
+    padding: 1.25rem;
+    box-sizing: border-box;
+
+    background: var(--card);
+    border-radius: var(--radius);
+}
+
+.chart-card-header {
+    margin-bottom: 0.75rem;
+}
+
+.chart-title {
+    margin: 0;
+
+    color: var(--card-foreground);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.chart-subtitle {
+    max-width: 48rem;
+    margin: 0.35rem 0 0;
+
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.chart-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.1rem;
+
+    margin-top: 0.9rem;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+
+    border-radius: 2px;
+}
+
+.legend-first {
+    background: #2ecc71;
+}
+
+.legend-top-five {
+    background: #1f8b4c;
+}
+
+.legend-two-plus {
+    background: #1685f8;
+}
+
+.legend-below-two {
+    background: #f32c55;
+}
+
+.guild-chart-palette {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+
+    width: fit-content;
+    margin-top: 0.9rem;
+    padding: 0.35rem;
+
+    background: var(--background);
+    border-radius: var(--radius);
+}
+
+.chart-scroll {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.player-chart-wrapper {
+    height: 34rem;
+}
+
+.guild-chart-wrapper {
+    height: 34rem;
+}
+
+.chart-wrapper canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    min-height: 20rem;
+
+    color: var(--muted-foreground);
+    background: var(--background);
+    border-radius: var(--radius);
+}
+
+.chart-empty iconify-icon {
+    font-size: 2rem;
+}
+
+.chart-empty p {
+    margin: 0;
+}
+
+@media (max-width: 1199px) {
+    .chart-card {
+        padding: 1rem;
+    }
+
+    .player-chart-wrapper,
+    .guild-chart-wrapper {
+        height: 32rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .charts-content {
+        padding: 0.75rem;
+    }
+
+    .chart-legend {
+        gap: 0.5rem 0.8rem;
+    }
+
+    .chart-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--muted-foreground) transparent;
+    }
+
+    .chart-scroll::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .chart-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .chart-scroll::-webkit-scrollbar-thumb {
+        background: var(--muted);
+        border-radius: 999px;
+    }
+
+    .player-chart-wrapper,
+    .guild-chart-wrapper {
+        width: 75rem;
+        min-width: 75rem;
+        height: 34rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .charts-content {
+        padding: 0.6rem;
+    }
+
+    .chart-card {
+        padding: 0.85rem;
+    }
+
+    .chart-title {
+        font-size: 1.1rem;
+    }
+
+    .chart-subtitle {
+        font-size: 0.82rem;
+    }
+
+}

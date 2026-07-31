@@ -1,0 +1,604 @@
+.guilds-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.main {
+    flex: 1;
+    width: calc(100% - 18rem);
+    min-width: 0;
+    height: 100vh;
+    margin-left: 18rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.guild-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    width: auto;
+    margin: 1rem 1rem 0;
+    box-sizing: border-box;
+}
+
+.charts-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.chart-card {
+    width: 100%;
+    min-width: 0;
+    padding: 1.25rem;
+    box-sizing: border-box;
+
+    background: var(--card);
+    border-radius: var(--radius);
+}
+
+.chart-card-header {
+    margin-bottom: 0.75rem;
+}
+
+.chart-title {
+    margin: 0;
+
+    color: var(--card-foreground);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.chart-subtitle {
+    max-width: 48rem;
+    margin: 0.35rem 0 0;
+
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.chart-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.1rem;
+
+    margin-top: 0.9rem;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+
+    border-radius: 2px;
+}
+
+.legend-first {
+    background: #2ecc71;
+}
+
+.legend-top-five {
+    background: #1f8b4c;
+}
+
+.legend-two-plus {
+    background: #1685f8;
+}
+
+.legend-below-two {
+    background: #f32c55;
+}
+
+.chart-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.chart-wrapper {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.player-chart-wrapper {
+    height: 34rem;
+}
+
+.chart-wrapper canvas {
+    display: block;
+
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    min-height: 20rem;
+
+    color: var(--muted-foreground);
+    background: var(--background);
+    border-radius: var(--radius);
+}
+
+.chart-empty iconify-icon {
+    font-size: 2rem;
+}
+
+.chart-empty p {
+    margin: 0;
+}
+
+.guild-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.guild-data,
+.guild-gxp-data {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1rem;
+}
+
+.card-title {
+    color: var(--foreground);
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.row .icon {
+    display: block;
+    font-size: 1rem;
+    color: var(--foreground);
+}
+
+.row .title {
+    color: var(--foreground);
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.row .value {
+    color: var(--muted-foreground);
+    font-size: 1rem;
+}
+
+.data {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 2;
+    gap: 1rem;
+}
+
+.data-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--background);
+    border-radius: var(--radius);
+    padding: 1rem;
+}
+
+.data-card .icon {
+    display: block;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    font-size: 1.5rem;
+    padding: .5rem;
+    border-radius: var(--radius);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.info .title {
+    font-size: .9rem;
+    color: var(--muted-foreground);
+}
+
+.info .value {
+    font-size: 1.2rem;
+    color: var(--foreground);
+    font-weight: 700;
+}
+
+@media (max-width: 1199px) {
+    .player-chart-wrapper {
+        height: 32rem;
+    }
+
+    .guild-info {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: 2;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .guilds-container {
+        display: block;
+        width: 100%;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .main {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        margin-left: 0;
+        overflow: visible;
+    }
+
+    .mobile-menu-btn {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        left: auto;
+        z-index: 1001;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 2.75rem;
+        height: 2.75rem;
+        padding: 0;
+
+        color: var(--foreground);
+        background: var(--card);
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+    }
+
+    .mobile-menu-btn iconify-icon {
+        font-size: 1.4rem;
+    }
+
+    .guild-info {
+        margin: 0.75rem 0.75rem 0;
+    }
+
+    .charts-content {
+        padding: 0.75rem;
+    }
+
+    .chart-legend {
+        gap: 0.5rem 0.8rem;
+    }
+
+    .chart-scroll {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--muted-foreground) transparent;
+    }
+
+    .chart-scroll::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .chart-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .chart-scroll::-webkit-scrollbar-thumb {
+        background: var(--muted);
+        border-radius: 999px;
+    }
+
+    .player-chart-wrapper {
+        width: 75rem;
+        min-width: 75rem;
+        height: 34rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .guild-info {
+        gap: 0.6rem;
+        margin: 0.6rem 0.6rem 0;
+    }
+
+    .charts-content {
+        padding: 0.6rem;
+    }
+
+    .chart-card {
+        padding: 0.85rem;
+    }
+
+    .chart-title {
+        font-size: 1.1rem;
+    }
+
+    .chart-subtitle {
+        font-size: 0.82rem;
+    }
+
+    .player-chart-wrapper {
+        height: 30rem;
+    }
+}
+
+
+.guild-members {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    width: auto;
+    margin: 1rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+
+    background: var(--card);
+    border-radius: var(--radius);
+}
+
+.guild-members .heading {
+    display: flex;
+    justify-content: center;
+}
+
+.guild-members .title {
+    margin: 0;
+
+    color: var(--foreground);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.member-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.member-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.member-group-heading {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: .65rem 1.4rem;
+
+    background: var(--background);
+    border-radius: var(--radius);
+    width: 100%;
+}
+
+.member-group-heading h2 {
+    margin: 0;
+
+    color: var(--foreground);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.member-group-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+
+    width: 100%;
+}
+
+.guild-member-card {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+
+    padding: .5rem 1rem;
+
+    background: var(--background);
+    border-radius: 999px;
+}
+
+.member-rank {
+    display: inline-flex;
+    align-items: center;
+    gap: .1rem;
+
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.member-username {
+    display: inline-flex;
+    align-items: center;
+
+    font-size: .95rem;
+    font-weight: 400;
+}
+
+.member-rank span,
+.member-username span {
+    color: var(--text-color);
+    font-weight: inherit;
+}
+
+.guilds-logs {
+    margin: 1rem;
+    padding: 1rem;
+    background: var(--card);
+    border-radius: var(--radius);
+}
+
+.guilds-logs .title {
+    color: var(--foreground) !important;
+}
+
+.logs-container {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    padding-top: .5rem;
+}
+
+.log-entry {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem;
+    background: var(--background);
+    border-radius: var(--radius);
+    border-left: 4px solid;
+}
+
+.log-entry.join {
+    border-color: oklch(0.72 0.19 145);
+}
+
+.log-entry.leave {
+    border-color: oklch(0.69 0.2 23.9);
+}
+
+.player-head {
+    width: 42px;
+    height: 42px;
+    image-rendering: pixelated;
+    border-radius: var(--radius);
+}
+
+.log-info {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.log-message {
+    color: var(--card-foreground);
+    font-size: .95rem;
+}
+
+.log-message strong {
+    font-weight: 700;
+}
+
+.log-date {
+    color: var(--muted-foreground);
+    font-size: .8rem;
+}
+
+.empty-logs {
+    color: var(--muted-foreground);
+    margin: .5rem 0;
+}
+
+.guilds-logs .subtext {
+    font-size: .9rem;
+    color: var(--muted-foreground);
+    margin-bottom: .5rem;
+}
+
+@media (max-width: 900px) {
+    .guild-members {
+        margin: .75rem;
+        padding: 1rem;
+    }
+
+    .member-group-list {
+        gap: .6rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .guild-members {
+        margin: .6rem;
+        padding: .75rem;
+    }
+
+    .guild-members .title {
+        font-size: 1.5rem;
+    }
+
+    .member-group-heading {
+        padding: .55rem 1.1rem;
+    }
+
+    .member-group-heading h2 {
+        font-size: .9rem;
+    }
+
+    .guild-member-card {
+        padding: .65rem .85rem;
+    }
+
+    .member-rank,
+    .member-username {
+        font-size: .85rem;
+    }
+}
